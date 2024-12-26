@@ -67,6 +67,7 @@ namespace TsMap.Canvas
             if (triStateTreeView1.GetCheckedByNodeName("GenCountryLocalizedNames")) exportFlags |= ExportFlags.CountryLocalizedNames;
             if (triStateTreeView1.GetCheckedByNodeName("GenOverlayList")) exportFlags |= ExportFlags.OverlayList;
             if (triStateTreeView1.GetCheckedByNodeName("GenOverlayPNGs")) exportFlags |= ExportFlags.OverlayPNGs;
+            if (triStateTreeView1.GetCheckedByNodeName("GenCoordList")) exportFlags |= ExportFlags.CoordList;
 
             return exportFlags;
         }

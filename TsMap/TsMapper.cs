@@ -433,6 +433,7 @@ namespace TsMap
             if (exportFlags.IsActive(ExportFlags.CityList)) ExportCities(exportFlags, exportPath);
             if (exportFlags.IsActive(ExportFlags.CountryList)) ExportCountries(exportFlags, exportPath);
             if (exportFlags.IsActive(ExportFlags.OverlayList)) ExportOverlays(exportFlags, exportPath);
+            if (exportFlags.IsActive(ExportFlags.CoordList)) ExportCoords(exportFlags, exportPath);
         }
 
         /// <summary>
@@ -564,6 +565,31 @@ namespace TsMap
             if (maxX < node.X) maxX = node.X;
             if (minZ > node.Z) minZ = node.Z;
             if (maxZ < node.Z) maxZ = node.Z;
+        }
+
+        public void ExportCoords(ExportFlags exportFlags, string path)
+        {
+            if (!Directory.Exists(path)) return;
+            var citiesJArr = new JArray();
+            foreach (var city in Cities)
+            {
+                if (city.Hidden) continue;
+                var cityJObj = new JObject();
+
+                var node = GetNodeByUid(city.NodeUid);
+                cityJObj["gameName"] = city.City.LocalizationToken;
+                cityJObj["realName"] = city.City.Name;
+                cityJObj["country"] = city.City.Country;
+                cityJObj["x"] = node.X.ToString(CultureInfo.InvariantCulture);
+                cityJObj["y"] = (node.Y + 50).ToString(CultureInfo.InvariantCulture);
+                cityJObj["z"] = (node.Z + 20).ToString(CultureInfo.InvariantCulture);
+
+                citiesJArr.Add(cityJObj);
+            }
+
+            var sortedJArr = new JArray(citiesJArr.OrderBy(obj => (string)obj["gameName"]));
+
+            File.WriteAllText(Path.Combine(path, "Coords.json"), sortedJArr.ToString(Formatting.Indented));
         }
 
         public TsNode GetNodeByUid(ulong uid)
