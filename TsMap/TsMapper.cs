@@ -577,7 +577,7 @@ namespace TsMap
                 var cityJObj = new JObject();
 
                 var node = GetNodeByUid(city.NodeUid);
-                cityJObj["gameName"] = city.City.LocalizationToken;
+                cityJObj["gameName"] = ScsToken.TokenToString(city.City.Token);
                 cityJObj["realName"] = city.City.Name;
                 cityJObj["country"] = city.City.Country;
                 cityJObj["x"] = node.X.ToString(CultureInfo.InvariantCulture);
