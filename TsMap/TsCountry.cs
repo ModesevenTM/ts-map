@@ -40,7 +40,7 @@ namespace TsMap
                 }
                 else if (key == "country_id")
                 {
-                    CountryId = int.Parse(value);
+                    CountryId = int.Parse(value.Split('#')[0]);
                 }
                 else if (key == "name")
                 {

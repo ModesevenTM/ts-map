@@ -111,6 +111,12 @@ namespace TsMap.Map.Overlays
         internal void Parse()
         {
             Valid = true;
+            if (Mat.TextureSource == null)
+            {
+                Valid = false;
+                Logger.Instance.Error($"Could not find TOBJ file ({Mat.TextureSource})");
+                return;
+            }
             _file = UberFileSystem.Instance.GetFile(Mat.TextureSource);
             if (_file == null)
             {
